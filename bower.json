@@ -1,0 +1,16 @@
+{
+  "name": "cpw",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "",
+  "license": "",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "jquery": "1.10.2",
+    "ng-dialog": "0.3.12",
+    "angular-ui-router": "~0.2.15",
+    "jshashes": "~1.0.5"
+  }
+}

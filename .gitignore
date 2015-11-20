@@ -1,0 +1,5 @@
+app/bc*
+*node_modules*
+*.log
+*.bak
+config.js

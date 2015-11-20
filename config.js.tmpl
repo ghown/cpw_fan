@@ -1,0 +1,61 @@
+var config = {};
+module.exports = config;
+
+var nodemailer = require('nodemailer');
+
+var smtpTransport = require('nodemailer-smtp-transport');
+
+// var generator = require('xoauth2').createXOAuth2Generator({
+	// user: 'jlguenego@gmail.com',
+	// clientId: '584503985447-58s9bohf8kvf96fhigkt1s4v8mmu8n8j.apps.googleusercontent.com',
+	// clientSecret: '0r1anjxfPSyWOeAEounubMvQ',
+	// refreshToken: ''
+	// accessToken: '{cached access token}' // optional
+// });
+
+// generator.on('token', function(token){
+	// console.log('New token for %s: %s', token.user, token.accessToken);
+// });
+
+
+config.port = 8000;
+config.mongodb = {
+	url: 'mongodb://localhost:27017/test'
+};
+
+
+config.email = {
+	from: 'RebelYou! <rebelyounow@gmail.com>'
+};
+
+var transport = smtpTransport({
+	host: 'smtp.gmail.com',
+	port: 465,
+	secure: true,
+	auth: {
+		user: 'rebelyounow@gmail.com',
+		pass: 'xxxxx'
+	}
+});
+
+config.email.transporter = nodemailer.createTransport(transport);
+
+config.oauth2GoogleClientApp = {
+	"client_id": "xxxxx",
+	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+	"token_uri": "https://accounts.google.com/o/oauth2/token",
+	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+	"client_secret": "xxxxx",
+	"redirect_uris": ["urn:ietf:wg:oauth:2.0:oob",
+	"http://localhost"]
+};
+
+config.oauth2GoogleWebClientApp = {
+	"client_id": "xxxxx",
+	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+	"token_uri": "https://accounts.google.com/o/oauth2/token",
+	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+	"client_secret": "xxxxx",
+	"redirect_uris": ["http://localhost:8000/authorized_redirect_uri/google"]
+};
+

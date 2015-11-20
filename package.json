@@ -1,0 +1,40 @@
+{
+  "name": "cpw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlguenego/cpw.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jlguenego/cpw/issues"
+  },
+  "homepage": "https://github.com/jlguenego/cpw#readme",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "body-parser": "^1.14.1",
+    "bower": "^1.6.5",
+    "connect-ensure-login": "^0.1.1",
+    "connect-mongo": "^0.8.2",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "googleapis": "^2.1.6",
+    "jshashes": "^1.0.5",
+    "mongodb": "^2.0.48",
+    "nodemailer": "^1.10.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "serve-index": "^1.7.2",
+    "xoauth2": "^1.1.0"
+  }
+}
