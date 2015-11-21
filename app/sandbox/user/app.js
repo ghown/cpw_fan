@@ -135,6 +135,11 @@
 				$window.open('/ws/sandbox/user/facebook/signin', '_self');
 			},
 			
+			linkedin: function() {
+				console.log('passport linkedin');
+				$window.open('/ws/sandbox/user/linkedin/signin', '_self');
+			},
+			
 			local: function() {
 				$rootScope.error.signin = undefined;
 				console.log('signin');

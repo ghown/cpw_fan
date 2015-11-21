@@ -78,7 +78,7 @@ router.get('/signin', function(req, res, next) {
 router.get('/signin/rd', 
 	passport.authenticate('google', { failureRedirect: '/sandbox/user/signin' }),
 	function(req, res) {
-		console.log('callback of /google/rd - succesfull authentication');
+		console.log('callback of /signin/rd - succesfull authentication');
 		console.log('req.user', req.user);
 		res.redirect('/sandbox/user/');
 	});

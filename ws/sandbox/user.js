@@ -38,6 +38,9 @@ router.use('/google', google);
 var facebook = require('./users/facebook.js');
 router.use('/facebook', facebook);
 
+var linkedin = require('./users/linkedin.js');
+router.use('/linkedin', linkedin);
+
 var googleApi = require('./users/googleApi.js');
 router.use('/googleApi', googleApi);
 
