@@ -12,7 +12,6 @@ gulp.task('check', function() {
 		.pipe(jshint())
 		.pipe(jshint.reporter("default"))
 		.pipe(jshint.reporter("fail"))
-		//.pipe(uglify())
 		.pipe(gulp.dest('./dist'));
 });
 
