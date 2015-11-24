@@ -7,12 +7,14 @@ passport.serializeUser(function(user, done) {
 	done(null, user._id);
 });
 
+
+// done(err, user)
 passport.deserializeUser(function(id, done) {
 	console.log('deserializeUser user', id);
 	users.findOne({_id: ObjectId(id)}).then(function(user) {
 		console.log('findOne result', user);
 		if (user == null) {
-			done('Incorrect id.');
+			done('pass', false);
 		} else {
 			console.log('User found.');
 			done(null, user);
@@ -20,7 +22,7 @@ passport.deserializeUser(function(id, done) {
 		
 	}).catch(function(error) {
 		console.log('error.', error);
-		done('Incorrect id.');
+		done('pass', false);
 	});
 });
 
@@ -35,6 +37,9 @@ router.use('/google', google);
 
 var facebook = require('./users/facebook.js');
 router.use('/facebook', facebook);
+
+var linkedin = require('./users/linkedin.js');
+router.use('/linkedin', linkedin);
 
 var googleApi = require('./users/googleApi.js');
 router.use('/googleApi', googleApi);

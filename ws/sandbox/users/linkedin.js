@@ -4,12 +4,12 @@ var passport = require('passport');
 var router = express.Router();
 module.exports = router;
 
-var CLIENT_ID = cfg.oauth2FacebookWebClientApp.client_id;
-var CLIENT_SECRET = cfg.oauth2FacebookWebClientApp.client_secret;
-var REDIRECT_URI = 'http://localhost:8000/ws/sandbox/user/facebook/signin/rd';
+var CLIENT_ID = cfg.oauth2LinkedinWebClientApp.client_id;
+var CLIENT_SECRET = cfg.oauth2LinkedinWebClientApp.client_secret;
+var REDIRECT_URI = cfg.oauth2LinkedinWebClientApp.redirect_uris[0];
 
 
-var Strategy = require('passport-facebook');
+var Strategy = require('passport-linkedin');
 
 var findOrCreateUser = function(profile, callback) {
 	console.log(profile.displayName, ':', profile.tagline);
@@ -22,7 +22,7 @@ var findOrCreateUser = function(profile, callback) {
 		if (user == null) {
 			user = {
 				email: profile.emails[0].value,
-				password: 'facebook',
+				password: 'linkedin',
 				firstname: profile.name.givenName,
 				lastname: profile.name.familyName
 			};
@@ -49,14 +49,13 @@ var findOrCreateUser = function(profile, callback) {
 
 
 passport.use(new Strategy({
-	clientID: CLIENT_ID,
-	clientSecret: CLIENT_SECRET,
-	callbackURL: REDIRECT_URI,
-	enableProof: false,
-	scope: 'email',
-	profileFields: ['emails', 'first_name', 'last_name']
-}, function(accessToken, refreshToken, profile, done) {
-	console.log('accessToken', accessToken);
+	consumerKey: CLIENT_ID,
+    consumerSecret: CLIENT_SECRET,
+    callbackURL: REDIRECT_URI,
+	profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline']
+}, function(token, tokenSecret, profile, done) {
+	console.log('token', token);
+	console.log('tokenSecret', tokenSecret);
 	console.log('profile', profile);
 	findOrCreateUser(profile, function (err, user) {
 		console.log('about to run done.');
@@ -69,14 +68,14 @@ passport.use(new Strategy({
 
 router.get('/signin', function(req, res, next) {
 	console.log('about to authenticate');
-	passport.authenticate('facebook')(req, res, next);
+	passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] })(req, res, next);
 }, function(req, res) {
 	console.log('keep going...');
 	
 });
 
 router.get('/signin/rd', 
-	passport.authenticate('facebook', { failureRedirect: '/sandbox/user/signin' }),
+	passport.authenticate('linkedin', { failureRedirect: '/sandbox/user/signin' }),
 	function(req, res) {
 		console.log('callback of /signin/rd - succesfull authentication');
 		console.log('req.user', req.user);
