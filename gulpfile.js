@@ -12,12 +12,17 @@ gulp.task('check', function() {
 		.pipe(jshint())
 		.pipe(jshint.reporter("default"))
 		.pipe(jshint.reporter("fail"))
-		.pipe(gulp.dest('./dist'));
+});
+
+gulp.task('compress',['check'], function() {
+  return gulp.src('app/sandbox/hello/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/'));
 });
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-	gulp.watch('app/sandbox/hello/*.js', ['check']);
+	gulp.watch('app/sandbox/hello/*.js', ['compress']);
 });
 
 // The default task (called when you run `gulp` from cli)

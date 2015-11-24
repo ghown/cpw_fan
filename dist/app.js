@@ -1,13 +1,1 @@
-(function() {
-	'use strict';
-
-	var app = angular.module('myApp', []);
-
-	app.directive('myFirstDirective', function() {
-		return {
-			restrict: 'E',
-			templateUrl: 'my_template.html',
-			transclude: true
-		};
-	});
-})();
+!function(){"use strict";var t=angular.module("myApp",[]);t.directive("myFirstDirective",function(){return{restrict:"E",templateUrl:"my_template.html",transclude:!0}})}();
