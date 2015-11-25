@@ -76,7 +76,7 @@ router.post('/update', function(req, res) {
 	console.log('about to update.');
 	console.log(req.body);
 	var query = {
-		_id: global.ObjectId(req.body._id)
+		_id: req.body._id
 	};
 	delete req.body._id;
 	User.update({ _id: query._id }, req.body, function(err, result) {
