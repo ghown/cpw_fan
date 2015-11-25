@@ -4,13 +4,22 @@ var mongoose = require('mongoose');
 var router = express.Router();
 module.exports = router;
 
+// Connection to the database
+mongoose.connect(cfg.mongodb.url, function(err) {
+	if (err) {throw err;}
+	console.log('server started on port ' + cfg.port);
+});
+
 // Create a schema
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	name: String,
 	age: Number
-});
+	}, {
+	versionKey: false
+	}
+);
 
 var User = mongoose.model('documents', userSchema);
 
@@ -64,13 +73,50 @@ router.get('/retrieve', function(req, res) {
 });
 
 router.post('/update', function(req, res) {
-
+	console.log('about to update.');
+	console.log(req.body);
+	var query = {
+		_id: req.body._id
+	};
+	delete req.body._id;
+	console.log(req.body);
+	User.update({ _id: query.id }, req.body, function(err, result) {
+		if (err) { throw err; }
+		console.log('Updated 1 object into the documents collection');
+		console.log('finished.');
+		console.log(result);
+		res.json({
+			status: 0,
+			message: result
+		});
+	});
 });
 
 router.post('/delete', function(req, res) {
-
+	console.log('about to delete.');
+	var list = req.body.map(function(n) {
+		return ObjectId(n);
+	});
+	User.remove({_id: {$in: list}}, function (err, result) {
+		if (err) { throw err; }
+		console.log('finished.');
+		res.json({
+			status: 0,
+			message: 'delete',
+			result: result
+		});
+	});
 });
 
 router.get('/drop', function(req, res) {
-
+	console.log('about to delete all.');
+	User.remove({}, function (err, result) {
+		if (err) { throw err; }
+		console.log('finished.');
+		res.json({
+			status: 0,
+			message: 'delete',
+			result: result
+		});
+	});
 });

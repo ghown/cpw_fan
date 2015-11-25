@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-var mongoose = require('mongoose');
 var passport = require('passport');
 
 
@@ -85,12 +84,5 @@ MongoClient.connect(cfg.mongodb.url + '?maxPoolSize=5', function(err, database) 
 	app.listen(cfg.port, function() {
 		console.log('server started on port ' + cfg.port);
 	});
-});
-
-
-// Connection to the database
-mongoose.connect(cfg.mongodb.url, function(err) {
-	if (err) {throw err;}
-	console.log('server started on port ' + cfg.port);
 });
 
