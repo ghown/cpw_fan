@@ -25,3 +25,7 @@ router.use('/configMgmt', configMgmt);
 
 var user = require('./sandbox/user.js');
 router.use('/user', user);
+
+var mongooseCrud = require('./sandbox/mongooseCrud.js');
+router.use('/mongooseCrud', mongooseCrud);
+

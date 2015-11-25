@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
 var passport = require('passport');
 
 
@@ -63,7 +64,7 @@ app.use(express.static('app'));
 app.use(serveIndex('app', {'icons': true}));
 
 app.all('/sandbox/user/*', function(req, res) {
-    res.sendFile('./app/sandbox/user/index.html', { root: __dirname });
+	res.sendFile('./app/sandbox/user/index.html', { root: __dirname });
 });
 
 app.use(function(req, res, next) {
@@ -87,4 +88,9 @@ MongoClient.connect(cfg.mongodb.url + '?maxPoolSize=5', function(err, database) 
 });
 
 
+// Connection to the database
+mongoose.connect(cfg.mongodb.url, function(err) {
+	if (err) {throw err;}
+	console.log('server started on port ' + cfg.port);
+});
 
