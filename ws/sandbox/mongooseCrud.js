@@ -76,11 +76,10 @@ router.post('/update', function(req, res) {
 	console.log('about to update.');
 	console.log(req.body);
 	var query = {
-		_id: req.body._id
+		_id: global.ObjectId(req.body._id)
 	};
 	delete req.body._id;
-	console.log(req.body);
-	User.update({ _id: query.id }, req.body, function(err, result) {
+	User.update({ _id: query._id }, req.body, function(err, result) {
 		if (err) { throw err; }
 		console.log('Updated 1 object into the documents collection');
 		console.log('finished.');
