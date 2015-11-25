@@ -15,7 +15,24 @@ var userSchema = new Schema({
 var User = mongoose.model('documents', userSchema);
 
 router.post('/create', function(req, res) {
-
+	var newUser = new User(req.body);
+	newUser.save(function(err) {
+		if (err) {
+			throw err
+			console.log('error.', error);
+			res.json({
+				status: 1,
+				message: 'not retrieved',
+				error: error
+			});
+		}
+		console.log('Inserted 1 object into the documents collection');
+		console.log('finished.');
+		res.json({
+			status: 0,
+			message: 'created'
+		});
+	});
 });
 
 router.get('/retrieve', function(req, res) {
