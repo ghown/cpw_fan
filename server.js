@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
-
+var fs = require('fs');
+var morgan = require('morgan');
+var FileStreamRotator = require('file-stream-rotator');
 
 var mongodb = require('mongodb');
 var Promise = require('bluebird');
@@ -18,10 +20,23 @@ global.ObjectId = mongodb.ObjectID;
 Promise.promisifyAll(MongoClient);
 Promise.promisifyAll(Collection.prototype);
 
+var logDirectory = __dirname + '/log';
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+var accessLogStream = FileStreamRotator.getStream({
+  filename: logDirectory + '/access-%DATE%.log',
+  frequency: 'daily',
+  frequency: '1h',
+  verbose: false
+});
+
 global.cfg = require('./config.js');
 var webservice = require('./ws/index.js');
 
 var app = express();
+
+app.use(morgan('combined', {stream: accessLogStream}));
 
 app.use(session({
 	secret: 'cpw!4321!',

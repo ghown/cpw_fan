@@ -14,10 +14,10 @@ mongoose.connect(cfg.mongodb.url, function(err) {
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-	name: String,
-	age: Number
+		name: String,
+		age: Number
 	}, {
-	versionKey: false
+		versionKey: false
 	}
 );
 
@@ -27,7 +27,6 @@ router.post('/create', function(req, res) {
 	var newUser = new User(req.body);
 	newUser.save(function(err) {
 		if (err) {
-			throw err
 			console.log('error.', error);
 			res.json({
 				status: 1,
@@ -53,7 +52,6 @@ router.get('/retrieve', function(req, res) {
 	}
 	User.find(query, function(err, result) {
 		if (err) {
-			throw err;
 			console.log('error.', error);
 			res.json({
 				status: 1,
@@ -80,7 +78,14 @@ router.post('/update', function(req, res) {
 	};
 	delete req.body._id;
 	User.update({ _id: query._id }, req.body, function(err, result) {
-		if (err) { throw err; }
+		if (err) {
+			console.log('error.', error);
+			res.json({
+				status: 1,
+				message: 'not updated',
+				error: error
+			});
+		}
 		console.log('Updated 1 object into the documents collection');
 		console.log('finished.');
 		console.log(result);
@@ -97,7 +102,14 @@ router.post('/delete', function(req, res) {
 		return ObjectId(n);
 	});
 	User.remove({_id: {$in: list}}, function (err, result) {
-		if (err) { throw err; }
+		if (err) {
+			console.log('error.', error);
+			res.json({
+				status: 1,
+				message: 'not delete',
+				error: error
+			});
+		}
 		console.log('finished.');
 		res.json({
 			status: 0,
@@ -110,11 +122,18 @@ router.post('/delete', function(req, res) {
 router.get('/drop', function(req, res) {
 	console.log('about to delete all.');
 	User.remove({}, function (err, result) {
-		if (err) { throw err; }
+		if (err) {
+			console.log('error.', error);
+			res.json({
+				status: 1,
+				message: 'not dropped',
+				error: error
+			});
+		}
 		console.log('finished.');
 		res.json({
 			status: 0,
-			message: 'delete',
+			message: 'drop',
 			result: result
 		});
 	});
