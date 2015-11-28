@@ -50,22 +50,6 @@ router.get('/getUser', function(req, res) {
 	res.status(401).end();	
 });
 
-router.get('/resetDB', function(req, res) {
-	console.log('resetDB');
-	users.drop().then(function() {
-		return users.createIndex({email: 1}, {unique: true});
-	}).then(function(result) {
-		console.log('Index created');
-		res.json({});
-	}).catch(function(error) {
-		console.log('error.', error);
-		res.json({
-			message: 'Database not setup',
-			error: error
-		});
-	});
-});
-
 router.post('/signup', function(req, res) {
 	console.log('signup req.body', req.body);
 	var user = req.body;

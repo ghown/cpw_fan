@@ -42,7 +42,7 @@
 			console.log('resetDB');
 			$http({
 				method: 'GET',
-				url: '/ws/sandbox/user/resetDB'
+				url: '/ws/admin/resetDB'
 			}).then(function(response) {
 				console.log('resetDB ok');
 			}).catch(function(error) {
