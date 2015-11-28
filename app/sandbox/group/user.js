@@ -80,6 +80,7 @@
 				data: user
 			}).then(function(response) {
 				$rootScope.response = response;
+				$rootScope.user = response.data;
 				$rootScope.isLogged = true;
 				$state.go('signup.success');
 			}).catch(function(error) {

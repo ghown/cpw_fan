@@ -24,6 +24,6 @@ router.use('/user', user);
 var mongooseCrud = require('./sandbox/mongooseCrud.js');
 router.use('/mongooseCrud', mongooseCrud);
 
-var userGroup = require('./sandbox/userGroup.js');
-router.use('/userGroup', userGroup);
+var group = require('./sandbox/group.js');
+router.use('/group', group);
 

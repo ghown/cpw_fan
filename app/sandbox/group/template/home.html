@@ -8,7 +8,7 @@
 			<tr>
 				<th>name</th>
 			</tr>
-			<tr ng-repeat="group in user.groups track by $index">
+			<tr ng-repeat="group in groups track by $index">
 				<td><button ng-click="open(group)">open</button></td>
 				<td>{{group}}</td>
 			</tr>

@@ -54,10 +54,11 @@ router.post('/signup', function(req, res) {
 	console.log('signup req.body', req.body);
 	var user = req.body;
 	users.insertAsync(user).then(function(result) {
-		console.log('Inserted 1 object into the users collection');
+		console.log('Inserted 1 object into the users collection', result);
 		console.log('User created.');
-		req.session.user = user;
-		res.json({});
+		user = result.ops[0];
+		req.login(user, function() {});
+		res.json(user);
 	}).catch(function(error) {
 		var result = {
 			message: 'User not created',

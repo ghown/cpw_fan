@@ -57,7 +57,26 @@
 				console.error('Error', error);
 			});
 		};
-	
+		
+		$scope.groups = [];
+		
+		$scope.init = function() {
+			console.log('init group');
+			
+			$http({
+				method: 'POST',
+				url: '/ws/sandbox/group/retrieve',
+				data: {
+					user: $scope.user
+				}
+			}).then(function(response) {
+				$scope.groups = response.data;
+			}).catch(function(error) {
+				console.error('Error', error);
+			});
+		};
+		
+		$scope.init();
 		
 	}]);
 })();

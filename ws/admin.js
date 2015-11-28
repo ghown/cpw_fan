@@ -6,7 +6,9 @@ router.get('/resetDB', function(req, res) {
 	global.db.dropDatabase().then(function() {
 		return users.createIndex({email: 1}, {unique: true});
 	}).then(function(result) {
-		console.log('Index created');
+		return groups.createIndex({name: 1}, {unique: true});
+	}).then(function(result) {
+		console.log('Indexes created');
 		res.json({});
 	}).catch(function(error) {
 		console.log('error.', error);
