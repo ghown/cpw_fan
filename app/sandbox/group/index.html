@@ -55,36 +55,6 @@
 	user: {{user}}
 </div>		
 		</script>
-		<!-- popup update group -->
-		<script type="text/ng-template" id="popup.html">
-<div>
-	<h1>Update</h1>
-	name: <input ng-model="obj.name"/><br/>
-	<button ng-click="updateGroup()">update</button>
-	{{updateMessage}}
-</div>		
-		</script>
-		<!-- template createGroup -->
-		<script type="text/ng-template" id="createGroup.html">
-<div ui-view></div>		
-		</script>
-		<script type="text/ng-template" id="createGroup.form.html">
-<div>
-	<h1>Create a group:</h1>
-	<hr/>
-	<form name="form" ng-submit="userGroup.create()" novalidate>
-		Group name: <input type="text" ng-model="userGroup.name" required/><br/>
-		<input type="submit" value="Create" ng-disabled="form.$invalid"/><br/>
-		<span class="error">{{error.userGroup}}</span>
-	</form>
-</div>		
-		</script>
-		<script type="text/ng-template" id="createGroup.success.html">
-<div>
-	Your group <b>{{userGroup.name}}</b> is created.<br/>
-	<a ui-sref="home">Home</a>
-</div>		
-		</script>
 		<!-- end template -->
 		<script src="/bc/jshashes/hashes.min.js"></script>
 		<script src="/bc/angular/angular.min.js"></script>

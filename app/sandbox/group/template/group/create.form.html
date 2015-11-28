@@ -1,0 +1,9 @@
+<div>
+	<h1>Create a group:</h1>
+	<hr/>
+	<form name="form" ng-submit="userGroup.create()" novalidate>
+		Group name: <input type="text" ng-model="userGroup.name" required/><br/>
+		<input type="submit" value="Create" ng-disabled="form.$invalid"/><br/>
+		<span class="error">{{error.userGroup}}</span>
+	</form>
+</div>

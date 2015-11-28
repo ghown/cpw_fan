@@ -7,13 +7,13 @@
 
 		$stateProvider.state('createGroup', {
 			url: '/createGroup',
-			templateUrl: 'createGroup.html'
+			templateUrl: 'template/group/create.html'
 		}).state('createGroup.form', {
 			url: '/',
-			templateUrl: 'createGroup.form.html'
+			templateUrl: 'template/group/create.form.html'
 		}).state('createGroup.success', {
 			url: '/',
-			templateUrl: 'createGroup.success.html'
+			templateUrl: 'template/group/create.success.html'
 		});
 	}]);
 	
@@ -29,7 +29,7 @@
 			$rootScope.group = angular.copy(group);
 			
 			ngDialog.open({
-				template: 'popup.html',
+				template: 'tempplate/group/update.html',
 				controller: ['$scope', '$injector', function($scope, $injector) {
 					$rootScope.closeThisDialog = function() {
 						$scope.closeThisDialog();
