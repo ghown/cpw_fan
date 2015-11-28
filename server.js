@@ -81,6 +81,10 @@ app.all('/sandbox/user/*', function(req, res) {
 	res.sendFile('./app/sandbox/user/index.html', { root: __dirname });
 });
 
+app.all('/sandbox/group/*', function(req, res) {
+	res.sendFile('./app/sandbox/group/index.html', { root: __dirname });
+});
+
 app.use(function(req, res, next) {
 	console.log('404: Page not Found', req.url);
 	next();

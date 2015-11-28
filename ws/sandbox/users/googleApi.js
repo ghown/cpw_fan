@@ -19,6 +19,9 @@ var oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 router.get('/signin', function(req, res) {
 	console.log('connect with google');
+	console.log('req.query', req.query);
+	console.log('req.session', req.session);
+	req.session.signin = req.query;
 	var url = oauth2Client.generateAuthUrl({
 		access_type: 'offline',
 		scope: [
@@ -34,19 +37,21 @@ router.get('/signin', function(req, res) {
 router.get('/signin/rd', function(req, res) {
 	console.log('redirect_uri with google');
 	console.log('req.query: ', req.query);
+	var url = req.session.signin.successUrl || '/sandbox/user/';
+	var failureUrl = req.session.signin.failureUrl || '/sandbox/user/';
 	var code = req.query.code;
 	console.log('code: ', code);
 	oauth2Client.getToken(code, function(err, tokens) {
 		if (err) {
 			console.log('err: ', err);
-			res.redirect('/sandbox/user/');
+			res.redirect(failureUrl);
 		}
 		console.log('tokens: ', tokens);
 		oauth2Client.setCredentials(tokens);
 		plus.people.get({ userId: 'me', auth: oauth2Client }, function(err, profile) {
 			if (err) {
 				console.log('An error occured', err);
-				res.redirect('/sandbox/user/');
+				res.redirect(failureUrl);
 				return;
 			}
 			console.log(profile.displayName, ':', profile.tagline);
@@ -73,10 +78,10 @@ router.get('/signin/rd', function(req, res) {
 			}).then(function(user) {
 				console.log('try to log user.');
 				req.logIn(user, function() {});
-				res.redirect('/sandbox/user/');
+				res.redirect(url);
 			}).catch(function(error) {
 				console.log('error.', error);
-				res.redirect('/sandbox/user/');
+				res.redirect(failureUrl);
 			});
 			
 		});

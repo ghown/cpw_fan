@@ -66,6 +66,7 @@ passport.use(new GoogleStrategy({
 
 router.get('/signin', function(req, res, next) {
 	console.log('about to authenticate');
+	req.session.signin = req.query;
 	passport.authenticate('google', { scope: [
 			'https://www.googleapis.com/auth/plus.login', 
 			'https://www.googleapis.com/auth/plus.profile.emails.read'
@@ -75,10 +76,12 @@ router.get('/signin', function(req, res, next) {
 	
 });
 
-router.get('/signin/rd', 
-	passport.authenticate('google', { failureRedirect: '/sandbox/user/signin' }),
+router.get('/signin/rd', function(req, res, next) {
+		return passport.authenticate('google', {failureRedirect: req.session.signin.failureUrl})(req, res, next);
+	},
 	function(req, res) {
+		var url = req.session.signin.successUrl || '/sandbox/user/';
 		console.log('callback of /signin/rd - succesfull authentication');
 		console.log('req.user', req.user);
-		res.redirect('/sandbox/user/');
+		res.redirect(url);
 	});

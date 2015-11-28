@@ -11,6 +11,14 @@
 		return new Hashes.SHA1().hex(hash + token);
 	};
 	
+	var encodeQueryData = function(obj) {
+		var ret = [];
+		for (var d in obj) {
+			ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(obj[d]));
+		}
+		return ret.join("&");
+	}
+	
 	var app = angular.module('ry.user', ['ui.router']);
 	
 	app.config(['$stateProvider', function($stateProvider) {
@@ -80,13 +88,16 @@
 			});
 		};
 		
+		var signinQs = {successUrl: '/sandbox/group/', failureUrl: '/sandbox/group/'};
+		
 		$rootScope.signin = {
 		
 			googleApi: function() {
 				console.log('connect google');
 				$http({
 					method: 'GET',
-					url: '/ws/sandbox/user/googleApi/signin/'
+					url: '/ws/sandbox/user/googleApi/signin/',
+					params: signinQs
 				}).then(function(response) {
 					$rootScope.response = response;
 					$window.open(response.data.url, '_self');
@@ -98,17 +109,17 @@
 		
 			google: function() {
 				console.log('passport google');
-				$window.open('/ws/sandbox/user/google/signin', '_self');
+				$window.open('/ws/sandbox/user/google/signin?' + encodeQueryData(signinQs), '_self');
 			},
 			
 			facebook: function() {
 				console.log('passport facebook');
-				$window.open('/ws/sandbox/user/facebook/signin', '_self');
+				$window.open('/ws/sandbox/user/facebook/signin?' + encodeQueryData(signinQs), '_self');
 			},
 			
 			linkedin: function() {
 				console.log('passport linkedin');
-				$window.open('/ws/sandbox/user/linkedin/signin', '_self');
+				$window.open('/ws/sandbox/user/linkedin/signin?' + encodeQueryData(signinQs), '_self');
 			},
 			
 			local: function() {
@@ -156,9 +167,6 @@
 		console.log('SigninCtrl');
 		var $http = $injector.get('$http');
 		var $rootScope = $injector.get('$rootScope');
-		var $window = $injector.get('$window');
-		var $state = $injector.get('$state');
-		var $stateParams = $injector.get('$stateParams');
 		
 		$rootScope.getLoginToken = function() {
 			console.log('getLoginToken');

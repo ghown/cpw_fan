@@ -57,7 +57,7 @@
 		</script>
 		<script type="text/ng-template" id="home.html">
 <div>
-	Welcome<br/>
+	Welcome xx<br/>{{isLogged}}
 	<!-- createGroup button -->
 	<div ng-if="isLogged">
 		<button ui-sref="createGroup.form">Create a group</button><br/><br/>
@@ -162,5 +162,6 @@
 		<script src="/bc/ng-dialog/js/ngDialog.min.js"></script>
 		<script src="app.js"></script>
 		<script src="user.js"></script>
+		<script src="group.js"></script>
 	</body>
 </html>
