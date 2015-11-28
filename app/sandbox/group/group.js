@@ -70,7 +70,16 @@
 					user: $scope.user
 				}
 			}).then(function(response) {
-				$scope.groups = response.data;
+				$scope.myGroups = response.data;
+			}).catch(function(error) {
+				console.error('Error', error);
+			});
+			$http({
+				method: 'POST',
+				url: '/ws/sandbox/group/retrieve',
+				data: {}
+			}).then(function(response) {
+				$scope.allGroups = response.data;
 			}).catch(function(error) {
 				console.error('Error', error);
 			});

@@ -1,4 +1,5 @@
 var express = require('express');
+var Promise = require('bluebird');
 
 var router = express.Router();
 module.exports = router;
@@ -35,9 +36,18 @@ router.post('/create', function(req, res) {
 
 router.post('/retrieve', function(req, res) {
 	console.log('retrieve Group req.body:\n', req.body);
-	var query = { creatorUserId: req.body.user._id };
-	groups.find(query).toArray().then(function(result) {
-		res.json(result);
+	var query = {};
+	if (req.body.user) {
+		query.creatorUserId = req.body.user._id;
+	}
+	groups.find(query).toArray().then(function(groups) {
+		console.log('groups', groups);
+		return Promise.all(groups.map(function(group) {
+			return users.findOne({_id: ObjectId(group.creatorUserId)});
+		}));
+	}).then(function(groups) {
+		console.log('groups 2', groups);
+		res.json(groups);
 	}).catch(function(error) {
 		console.log('error.', error);
 		res.statusCode = 500;
