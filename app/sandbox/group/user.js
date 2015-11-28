@@ -25,17 +25,17 @@
 
 		$stateProvider.state('signup', {
 			url: '/signup',
-			templateUrl: 'signup.html',
+			templateUrl: 'template/user/signup.html',
 			controller: 'SignupCtrl'
 		}).state('signup.form', {
 			url: '/',
-			templateUrl: 'signup.form.html'
+			templateUrl: 'template/user/signup.form.html'
 		}).state('signup.success', {
 			url: '/',
-			templateUrl: 'signup.success.html'
+			templateUrl: 'template/user/signup.success.html'
 		}).state('signin', {
 			url: '/signin',
-			templateUrl: 'signin.html',
+			templateUrl: 'template/user/signin.html',
 			controller: 'SigninCtrl'
 		});
 	}]);

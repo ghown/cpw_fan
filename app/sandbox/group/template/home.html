@@ -1,0 +1,18 @@
+<div>
+	Welcome xx<br/>{{isLogged}}
+	<!-- createGroup button -->
+	<div ng-if="isLogged">
+		<button ui-sref="createGroup.form">Create a group</button><br/><br/>
+		<!-- My group -->
+		My groups:<br/>
+		<table>
+			<tr>
+				<th>name</th>
+			</tr>
+			<tr ng-repeat="group in user.groups track by $index">
+				<td><button ng-click="open(group)">open</button></td>
+				<td>{{group}}</td>
+			</tr>
+		</table>
+	</div>	
+</div>

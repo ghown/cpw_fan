@@ -1,0 +1,18 @@
+<div>
+	<h1>Sign in</h1>
+	<hr/>
+	<div>
+		<button class="connect" ng-click="signin.googleApi()">Sign up with Google</button>
+		<button class="connect" ng-click="signin.google()">Sign up with Google (Passport)</button>
+		<button class="connect" ng-click="signin.linkedin()">Sign up with Linkedin</button>
+		<button class="connect" ng-click="signin.facebook()">Sign up with Facebook</button>
+	</div>
+	<hr/>
+	<form name="form" ng-submit="signin.local()" novalidate>
+		email: <input type="email" ng-model="user.email" required/><br/>
+		password: <input type="password" ng-model="user.password" required/><br/>
+		<input type="checkbox" ng-model="user.keepLogged"/>Keep me logged in<br/>
+		<input type="submit" value="Sign in" ng-disabled="form.$invalid"/><br/>
+		<span class="error">{{error.signin}}</span>
+	</form>
+</div>
