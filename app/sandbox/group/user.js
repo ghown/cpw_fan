@@ -48,7 +48,7 @@
 		var $stateParams = $injector.get('$stateParams');
 		
 		$rootScope.user = {};
-		$rootScope.userGroup = {};
+		$rootScope.group = {};
 		$rootScope.isLogged = false;
 		
 		$rootScope.getUser = function() {

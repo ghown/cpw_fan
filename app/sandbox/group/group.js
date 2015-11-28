@@ -7,7 +7,8 @@
 
 		$stateProvider.state('createGroup', {
 			url: '/createGroup',
-			templateUrl: 'template/group/create.html'
+			templateUrl: 'template/group/create.html',
+			controller: 'GroupCtrl'
 		}).state('createGroup.form', {
 			url: '/',
 			templateUrl: 'template/group/create.form.html'
@@ -17,19 +18,18 @@
 		});
 	}]);
 	
-	app.run(['$injector', function($injector) {
+	app.controller('GroupCtrl', ['$injector', '$scope', function($injector, $scope) {
+		console.log('GroupCtrl');
 		var $http = $injector.get('$http');
-		var $rootScope = $injector.get('$rootScope');
-		var $window = $injector.get('$window');
 		var $state = $injector.get('$state');
 		var $stateParams = $injector.get('$stateParams');
 		var ngDialog = $injector.get('ngDialog');
 		
-		$rootScope.open = function(group) {
-			$rootScope.group = angular.copy(group);
+		$scope.open = function(group) {
+			$scope.group = angular.copy(group);
 			
 			ngDialog.open({
-				template: 'tempplate/group/update.html',
+				template: 'template/group/update.html',
 				controller: ['$scope', '$injector', function($scope, $injector) {
 					$rootScope.closeThisDialog = function() {
 						$scope.closeThisDialog();
@@ -37,28 +37,27 @@
 				}]
 			});
 		};
-		
-		// Group functions
-		$rootScope.userGroup = {
-			create: function() {
-				$rootScope.error.userGroup = undefined;
-				console.log('createGroup');
-				$http({
-					method: 'POST',
-					url: '/ws/sandbox/userGroup/createGroup',
-					data: {
-						user: $rootScope.user,
-						group: $rootScope.userGroup
-					}
-				}).then(function(response) {
-					$rootScope.response  = response;
-					$state.go('createGroup.success');
-				}).catch(function(error) {
-					$rootScope.error.userGroup = 'error: ' + error.data.message;
-					console.error('Error', error);
-				});
-			}
+
+		$scope.create = function() {
+			console.log('create Group');
+			$scope.error.group = undefined;
+			
+			$http({
+				method: 'POST',
+				url: '/ws/sandbox/group/create',
+				data: {
+					user: $scope.user,
+					group: $scope.group
+				}
+			}).then(function(response) {
+				$scope.response  = response;
+				$state.go('createGroup.success');
+			}).catch(function(error) {
+				$scope.error.group = 'error: ' + error.data.message;
+				console.error('Error', error);
+			});
 		};
+	
 		
 	}]);
 })();

@@ -1,7 +1,6 @@
 <div>
 	Welcome xx<br/>{{isLogged}}
-	<!-- createGroup button -->
-	<div ng-if="isLogged">
+	<div ng-controller="GroupCtrl" ng-if="isLogged">
 		<button ui-sref="createGroup.form">Create a group</button><br/><br/>
 		<!-- My group -->
 		My groups:<br/>
