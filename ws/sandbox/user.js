@@ -7,8 +7,6 @@ passport.serializeUser(function(user, done) {
 	done(null, user._id);
 });
 
-
-// done(err, user)
 passport.deserializeUser(function(id, done) {
 	console.log('deserializeUser user', id);
 	users.findOne({_id: ObjectId(id)}).then(function(user) {
@@ -19,7 +17,6 @@ passport.deserializeUser(function(id, done) {
 			console.log('User found.');
 			done(null, user);
 		}
-		
 	}).catch(function(error) {
 		console.log('error.', error);
 		done('pass', false);
@@ -67,7 +64,6 @@ router.get('/resetDB', function(req, res) {
 			error: error
 		});
 	});
-	
 });
 
 router.post('/signup', function(req, res) {

@@ -3,11 +3,6 @@ var express = require('express');
 var router = express.Router();
 module.exports = router
 
-router.use(function(req, res, next) {
-	console.log('coucou');
-	next();
-});
-
 var crud = require('./sandbox/crud.js');
 router.use('/crud', crud);
 
@@ -28,4 +23,7 @@ router.use('/user', user);
 
 var mongooseCrud = require('./sandbox/mongooseCrud.js');
 router.use('/mongooseCrud', mongooseCrud);
+
+var userGroup = require('./sandbox/userGroup.js');
+router.use('/userGroup', userGroup);
 

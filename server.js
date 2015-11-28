@@ -8,6 +8,7 @@ var passport = require('passport');
 var fs = require('fs');
 var morgan = require('morgan');
 var FileStreamRotator = require('file-stream-rotator');
+var mongoose = require('mongoose');
 
 var mongodb = require('mongodb');
 var Promise = require('bluebird');
@@ -20,23 +21,22 @@ global.ObjectId = mongodb.ObjectID;
 Promise.promisifyAll(MongoClient);
 Promise.promisifyAll(Collection.prototype);
 
-var logDirectory = __dirname + '/log';
-// ensure log directory exists
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+// var logDirectory = __dirname + '/log';
+// fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
-var accessLogStream = FileStreamRotator.getStream({
-  filename: logDirectory + '/access-%DATE%.log',
-  frequency: 'daily',
-  frequency: '1h',
-  verbose: false
-});
+
+// var accessLogStream = FileStreamRotator.getStream({
+  // filename: logDirectory + '/access-%DATE%.log',
+  // frequency: 'daily',
+  // verbose: false
+// });
 
 global.cfg = require('./config.js');
 var webservice = require('./ws/index.js');
 
 var app = express();
 
-app.use(morgan('combined', {stream: accessLogStream}));
+//app.use(morgan('combined', {stream: accessLogStream}));
 
 app.use(session({
 	secret: 'cpw!4321!',
@@ -86,13 +86,14 @@ app.use(function(req, res, next) {
 	next();
 });
 
-MongoClient.connect(cfg.mongodb.url + '?maxPoolSize=5', function(err, database) {
+MongoClient.connect(cfg.mongodb.url + '?maxPoolSize=7', function(err, database) {
 	if (err) {
 		throw err;
 	}
 
 	global.db = database;
 	global.users = db.collection('users');
+	global.groups = db.collection('groups');
 	//console.log('db', db);
 	//console.log('db.s.topology.poolSize', db.s.topology.poolSize);
 
@@ -101,3 +102,14 @@ MongoClient.connect(cfg.mongodb.url + '?maxPoolSize=5', function(err, database) 
 	});
 });
 
+var options = {
+	server: { poolSize: 6 }
+}
+
+// Connection to the database
+// mongoose.connect(cfg.mongodb.url, options, function(err) {
+	// if (err) {
+		// throw err;
+	// }
+	// console.log('mongoose connection ok');
+// });

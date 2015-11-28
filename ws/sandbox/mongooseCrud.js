@@ -1,19 +1,16 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
+
+
 
 var router = express.Router();
 module.exports = router;
 
-// Connection to the database
-mongoose.connect(cfg.mongodb.url, function(err) {
-	if (err) {throw err;}
-	console.log('server started on port ' + cfg.port);
-});
-
 // Create a schema
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var UserSchema = new Schema({
 		name: String,
 		age: Number
 	}, {
@@ -21,24 +18,25 @@ var userSchema = new Schema({
 	}
 );
 
-var User = mongoose.model('documents', userSchema);
+var User = mongoose.model('Document', UserSchema);
+
+Promise.promisifyAll(User.prototype);
 
 router.post('/create', function(req, res) {
 	var newUser = new User(req.body);
-	newUser.save(function(err) {
-		if (err) {
-			console.log('error.', error);
-			res.json({
-				status: 1,
-				message: 'not retrieved',
-				error: error
-			});
-		}
+	newUser.saveAsync().then(function() {
 		console.log('Inserted 1 object into the documents collection');
 		console.log('finished.');
 		res.json({
 			status: 0,
 			message: 'created'
+		});
+	}).catch(function(err) {
+		console.log('error.', err);
+		res.json({
+			status: 1,
+			message: 'not retrieved',
+			error: err
 		});
 	});
 });
@@ -52,11 +50,11 @@ router.get('/retrieve', function(req, res) {
 	}
 	User.find(query, function(err, result) {
 		if (err) {
-			console.log('error.', error);
+			console.log('error.', err);
 			res.json({
 				status: 1,
 				message: 'not retrieved',
-				error: error
+				error: err
 			});
 		}
 		myResult = result;
@@ -79,11 +77,11 @@ router.post('/update', function(req, res) {
 	delete req.body._id;
 	User.update({ _id: query._id }, req.body, function(err, result) {
 		if (err) {
-			console.log('error.', error);
+			console.log('error.', err);
 			res.json({
 				status: 1,
 				message: 'not updated',
-				error: error
+				error: err
 			});
 		}
 		console.log('Updated 1 object into the documents collection');
@@ -103,11 +101,11 @@ router.post('/delete', function(req, res) {
 	});
 	User.remove({_id: {$in: list}}, function (err, result) {
 		if (err) {
-			console.log('error.', error);
+			console.log('error.', err);
 			res.json({
 				status: 1,
 				message: 'not delete',
-				error: error
+				error: err
 			});
 		}
 		console.log('finished.');
@@ -123,11 +121,11 @@ router.get('/drop', function(req, res) {
 	console.log('about to delete all.');
 	User.remove({}, function (err, result) {
 		if (err) {
-			console.log('error.', error);
+			console.log('error.', err);
 			res.json({
 				status: 1,
 				message: 'not dropped',
-				error: error
+				error: err
 			});
 		}
 		console.log('finished.');
