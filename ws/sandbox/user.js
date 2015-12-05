@@ -3,13 +3,23 @@ var session = require('express-session');
 var passport = require('passport');
 
 passport.serializeUser(function(user, done) {
-	console.log('user', user);
+	console.log('user.js: serializeUser user', user);
+	if (user._id == undefined) {
+		done('pass', false);
+		return;
+	}
 	done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-	console.log('deserializeUser user', id);
-	users.findOne({_id: ObjectId(id)}).then(function(user) {
+	console.log('user.js: deserializeUser user', id);
+	var _id;
+	try {
+		_id = ObjectId(id);
+	} catch(e) {
+		return done('pass', undefined);
+    }
+	users.findOne({_id: _id}).then(function(user) {
 		console.log('findOne result', user);
 		if (user == null) {
 			done('pass', false);
@@ -19,7 +29,7 @@ passport.deserializeUser(function(id, done) {
 		}
 	}).catch(function(error) {
 		console.log('error.', error);
-		done('pass', false);
+		done('pass', undefined);
 	});
 });
 

@@ -35,6 +35,11 @@ global.cfg = require('./config.js');
 var webservice = require('./ws/index.js');
 
 var app = express();
+app.use(function(req, res, next) {
+	console.log('req.url', req.url);
+	next();
+});
+
 
 //app.use(morgan('combined', {stream: accessLogStream}));
 
@@ -69,13 +74,16 @@ app.use(function(req, res, next) {
 	var ua = req.get('User-Agent');
 	var isMobile = /mobile/i.test(ua);
 	if (isMobile) {
-		express.static('app_mobile')(req, res, next);
+		express.static('build/app_mobile')(req, res, next);
+		express.static('src/app_mobile')(req, res, next);
 	} else {
 		next();
 	}
 });
-app.use(express.static('app'));
-app.use(serveIndex('app', {'icons': true}));
+app.use(express.static('build/app'));
+app.use(express.static('src/app'));
+app.use(serveIndex('build/app', {'icons': true}));
+app.use(serveIndex('src/app', {'icons': true}));
 
 app.all('/sandbox/user/*', function(req, res) {
 	res.sendFile('./app/sandbox/user/index.html', { root: __dirname });
