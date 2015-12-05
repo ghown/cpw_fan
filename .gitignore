@@ -1,4 +1,4 @@
-app/bc*
+src/app/bc*
 *node_modules*
 *.log
 *.bak
