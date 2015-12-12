@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Angular Datepicker</title>
+		<link rel="stylesheet" href="/bower_components/angular-datepicker/dist/angular-datepicker.min.css" />
+	</head>
+	<body>
+		<div date-picker="myDate" min-view="date" view="year"></div>
+		
+		{{myDate}}
+		<hr/>
+		<input date-time ng-model="myDate2" min-view="date" view="year" format="YYYY-MM-DD" readonly/>
+		<hr/>
+		<div date-range start="startDate" end="endDate" view="date" min-view="date"></div>
+		start: {{startDate.format('YYYY-MM-DD')}}<br/>
+		end: {{endDate.format('YYYY-MM-DD')}}
+		<script src="/bower_components/angular/angular.min.js"></script>
+		<script src="/bower_components/moment/min/moment.min.js"></script>
+		<script src="/bower_components/angular-datepicker/dist/angular-datepicker.min.js"></script>
+		
+		<script src="app.js"></script>
+	</body>
+</html>

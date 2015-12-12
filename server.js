@@ -70,6 +70,7 @@ app.post('/essai', function(req, res, next) {
 
 app.use('/ws', webservice);
 app.use('/bc', express.static('bower_components'));
+app.use('/bower_components', express.static('bower_components'));
 app.use(function(req, res, next) {
 	var ua = req.get('User-Agent');
 	var isMobile = /mobile/i.test(ua);
