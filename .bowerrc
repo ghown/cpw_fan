@@ -1,4 +1,4 @@
 {
-  "directory": "src/app/bc",
+  "directory": "bower_components",
   "interactive": false
 }

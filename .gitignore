@@ -1,5 +1,6 @@
-src/app/bc*
+*bower_components*
 *node_modules*
+build/
 *.log
 *.bak
 config.js

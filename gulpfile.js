@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var jscs = require("gulp-jscs");
 var jshint = require("gulp-jshint");
 var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
 
 gulp.task('check', function() {
 	// Minify and copy all JavaScript (except vendor scripts)
@@ -14,15 +17,21 @@ gulp.task('check', function() {
 		.pipe(jshint.reporter("fail"))
 });
 
-gulp.task('compress',['check'], function() {
-  return gulp.src('app/sandbox/hello/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/'));
+gulp.task('uglify-hello', function() {
+	return gulp.src(['bower_components/angular/angular.js', 'src/app/sandbox/hello/app.js'])
+		.pipe(sourcemaps.init())
+        .pipe(concat('concat.js'))
+        .pipe(gulp.dest('build'))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('build'));
 });
+
+gulp.task('build', ['uglify-hello']);
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-	gulp.watch('app/sandbox/hello/*.js', ['compress']);
+	gulp.watch('app/sandbox/hello/*.js', ['check']);
 });
 
 // The default task (called when you run `gulp` from cli)
