@@ -11,6 +11,7 @@
     "jquery": "1.10.2",
     "ng-dialog": "0.3.12",
     "angular-ui-router": "~0.2.15",
-    "jshashes": "~1.0.5"
+    "jshashes": "~1.0.5",
+    "ng-tags-input": "2.3.0"
   }
 }

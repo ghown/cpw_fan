@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>NgTagInput example</title>
+		<link rel="stylesheet" type="text/css" href="/bc/ng-tags-input/ng-tags-input.min.css">
+	</head>
+	<body>
+		<div style="width: 200px;">
+			<form name="form" ng-submit="validate()">
+				<tags-input placeholder="Enter a city" ng-model="tags">
+					<auto-complete source="autoComplete($query)"></auto-complete>
+				</tags-input>
+				<input type="submit" ng-disabled="form.$invalid" value="Valider"/>
+			</form>
+		</div>
+
+		{{tags}}
+		<script src="/bc/angular/angular.min.js"></script>
+		<script src="/bc/ng-tags-input/ng-tags-input.min.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
