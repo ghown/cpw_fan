@@ -20,7 +20,7 @@
 		var $rootScope = $injector.get('$rootScope');
 		
 		$rootScope.cities = [
-			{text: 'xyz', display: 'Parisxxx'},
+			{text: 'Paris', display: 'Paris', flag: 'paris.png'},
 			{text: 'Torcy', display: 'Torcy'},
 			{text: 'Meaux', display: 'Meaux'},
 			{text: 'Saint-Sylvain', display: 'Saint-Sylvain'},
