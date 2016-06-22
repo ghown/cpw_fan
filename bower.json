@@ -6,15 +6,15 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "angular": "~1.2.14",
-    "angular-route": "~1.2.14",
+    "angular": "1.2.14",
+    "angular-route": "1.2.14",
     "jquery": "1.10.2",
     "ng-dialog": "0.3.12",
-    "angular-ui-router": "~0.2.15",
-    "jshashes": "~1.0.5",
+    "angular-ui-router": "0.2.15",
+    "jshashes": "1.0.5",
     "ng-tags-input": "2.3.0",
-    "moment": "~2.10.6",
-    "moment-timezone": "~0.4.1",
+    "moment": "2.10.6",
+    "moment-timezone": "0.4.1",
 	"angular-datepicker": "2.0.0"
   }
 }
